@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <MageProfis_RichSnippets>
+            <version>1.0.0.0</version>
+        </MageProfis_RichSnippets>
+    </modules>
+    <frontend>
+        <layout>
+            <updates>
+                <richsnippets>
+                    <file>mageprofis_richsnippets.xml</file>
+                </richsnippets>
+            </updates>
+        </layout>
+    </frontend>
+</config>

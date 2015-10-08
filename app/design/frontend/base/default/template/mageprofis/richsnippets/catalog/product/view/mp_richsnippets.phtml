@@ -1,0 +1,38 @@
+<?php
+$_product = $this->getProduct();
+$currency_code = Mage::app()->getStore()->getCurrentCurrencyCode();
+var_dump( json_encode('Hallo "Welt" Toll') );
+?>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org/",
+  "@type": "Product",
+  "name": <?php echo json_encode($_product->getName()) ?>,
+  
+  <?php if ($_product->getImage() != 'no_selection' && $_product->getImage()): ?>
+  "image": "<?php echo $this->helper('catalog/image')->init($_product, 'image') ?>",
+  <?php endif; ?>
+  
+  "description": <?php echo json_encode($_product->getShortDescription()) ?>,
+  "sku": "<?php echo $_product->getSku() ?>",
+  
+  <?php if( $_product->getManufacturer() ): ?>
+  "brand": {
+    "@type": "Thing",
+    "name": <?php echo json_encode($_product->getAttributeText('manufacturer')) ?>
+  },
+  <?php endif; ?>
+  
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "<?php echo $currency_code ?>",
+    "price": "<?php echo $_product->getFinalPrice() ?>",
+    
+    <?php if ($_product->isSaleable()): ?>
+    "availability": "http://schema.org/InStock"
+    <?php else: ?>
+    "availability": "http://schema.org/SoldOut"
+    <?php endif; ?>
+  }
+}
+</script>
