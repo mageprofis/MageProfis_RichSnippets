@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<layout>
+    <_breadcrumb>
+        <reference name="content">
+            <block type="richsnippets/breadcrumb" name="richsnippets.breadcumb" template="mageprofis/richsnippets/breadcrumb.phtml" />
+        </reference>
+    </_breadcrumb>
+
+    <catalog_product_view>
+        <update handle="_breadcrumb" />
+        <reference name="content">
+            <block type="richsnippets/product" name="product.view.richsnippets" template="mageprofis/richsnippets/catalog/product/view/richsnippets.phtml" />
+        </reference>
+    </catalog_product_view>
+    <catalog_category_view>
+        <update handle="_breadcrumb" />
+    </catalog_category_view>
+</layout>

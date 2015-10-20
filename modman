@@ -1,4 +1,4 @@
-src/app/etc/modules/MageProfis_RichSnippets.xml                                         app/etc/modules/MageProfis_RichSnippets.xml
-src/app/code/community/MageProfis/RichSnippets                                          app/code/community/MageProfis/RichSnippets/
-src/app/design/frontend/base/default/layout/richsnippets.xml                            app/design/frontend/base/default/layout/richsnippets.xml
-src/app/design/frontend/base/default/template/catalog/product/view/richsnippets.phtml   src/app/design/frontend/base/default/template/catalog/product/view/richsnippets.phtml
+src/app/etc/modules/MageProfis_RichSnippets.xml                                                                 app/etc/modules/MageProfis_RichSnippets.xml
+src/app/code/community/MageProfis/RichSnippets                                                                  app/code/community/MageProfis/RichSnippets
+src/app/design/frontend/base/default/layout/mageprofis/richsnippets.xml                                         app/design/frontend/base/default/layout/richsnippets.xml
+src/app/design/frontend/base/default/template/mageprofis/richsnippets/catalog/product/view/richsnippets.phtml   app/design/frontend/base/default/template/mageprofis/richsnippets/catalog/product/view/richsnippets.phtml

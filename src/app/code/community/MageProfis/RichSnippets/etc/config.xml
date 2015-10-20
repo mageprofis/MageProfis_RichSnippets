@@ -20,7 +20,7 @@
         <layout>
             <updates>
                 <richsnippets>
-                    <file>richsnippets.xml</file>
+                    <file>mageprofis/richsnippets.xml</file>
                 </richsnippets>
             </updates>
         </layout>

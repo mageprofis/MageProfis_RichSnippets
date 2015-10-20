@@ -48,20 +48,4 @@ extends Mage_Catalog_Block_Product_Abstract
             ->getPrice($this->getProduct(), $this->getProduct()->getFinalPrice(), true);
         return number_format($price, 2, '.', '');
     }
-
-    /**
-     * get Breadcrumb Path without Product
-     * 
-     * @return array
-     */
-    public function getBreadcrumbPath()
-    {
-        if (is_null($this->_breadcrumb))
-        {
-            $breadcrumb = Mage::helper('catalog')->getBreadcrumbPath();
-            array_pop($breadcrumb); // remove last item
-            $this->_breadcrumb = $breadcrumb;
-        }
-        return $this->_breadcrumb;
-    }
 }
