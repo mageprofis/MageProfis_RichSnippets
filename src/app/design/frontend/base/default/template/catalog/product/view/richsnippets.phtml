@@ -32,3 +32,28 @@
   }
 }
 </script>
+<?php if($this->getBreadcrumbPath()): ?>
+<?php
+    $breadcrumb = array(
+        '@context'        => 'http://schema.org',
+        '@type'           => 'BreadcrumbList',
+        'itemListElement' => array(),
+    );
+    $i = 0;
+    foreach($this->getBreadcrumbPath() as $_item)
+    {
+        $i++;
+        $breadcrumb['itemListElement'][] = array(
+            '@type'    => 'ListItem',
+            'position' => $i,
+            'item' => array(
+                '@id'  => $_item['link'],
+                'name' => $_item['label'],
+            )
+        );
+    }
+?>
+<script type="application/ld+json">
+<?php echo $this->jsonEncode($breadcrumb) ?>
+</script>
+<?php endif; ?>
