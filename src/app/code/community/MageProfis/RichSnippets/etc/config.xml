@@ -9,7 +9,7 @@
         <layout>
             <updates>
                 <richsnippets>
-                    <file>mageprofis_richsnippets.xml</file>
+                    <file>richsnippets.xml</file>
                 </richsnippets>
             </updates>
         </layout>
