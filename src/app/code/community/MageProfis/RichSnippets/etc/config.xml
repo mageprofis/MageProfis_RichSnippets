@@ -5,6 +5,17 @@
             <version>1.0.0.0</version>
         </MageProfis_RichSnippets>
     </modules>
+    <global>
+        <helpers>
+            <richsnippets>
+                <class>MageProfis_RichSnippets_Helper</class>
+            </richsnippets>
+        </helpers>
+        <blocks>
+            <richsnippets>
+                <class>MageProfis_RichSnippets_Block</class>
+            </richsnippets>
+        </blocks>
     <frontend>
         <layout>
             <updates>

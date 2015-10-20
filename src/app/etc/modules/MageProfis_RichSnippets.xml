@@ -3,7 +3,7 @@
     <modules>
         <MageProfis_RichSnippets>
             <active>true</active>
-            <codePool>local</codePool>
+            <codePool>community</codePool>
         </MageProfis_RichSnippets>
     </modules>
 </config>

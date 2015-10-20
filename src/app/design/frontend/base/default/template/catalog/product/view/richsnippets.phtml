@@ -1,32 +1,28 @@
-<?php
-$_product = $this->getProduct();
-$currency_code = Mage::app()->getStore()->getCurrentCurrencyCode();
-//var_dump( json_encode('Hallo "Welt" Toll') );
-?>
+<?php /* @var $this MageProfis_RichSnippets_Block_Product */ ?>
 <script type="application/ld+json">
 {
   "@context": "http://schema.org/",
   "@type": "Product",
-  "name": <?php echo json_encode($_product->getName()) ?>,
+  "name": <?php echo $this->jsonEncode($this->getProduct()->getName()) ?>,
   
-  <?php if ($_product->getImage() != 'no_selection' && $_product->getImage()): ?>
-  "image": "<?php echo $this->helper('catalog/image')->init($_product, 'image') ?>",
+  <?php if ($this->getProduct()->getImage() != 'no_selection' && $this->getProduct()->getImage()): ?>
+  "image": "<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'image') ?>",
   <?php endif; ?>
   
-  "description": <?php echo json_encode($_product->getShortDescription()) ?>,
-  "sku": "<?php echo $_product->getSku() ?>",
+  "description": <?php echo $this->jsonEncode($this->getProduct()->getShortDescription()) ?>,
+  "sku": "<?php echo $this->getProduct()->getSku() ?>",
   
-  <?php if( $_product->getManufacturer() ): ?>
+  <?php if($this->getProduct()->getManufacturer()): ?>
   "brand": {
     "@type": "Thing",
-    "name": <?php echo json_encode($_product->getAttributeText('manufacturer')) ?>
+    "name": <?php echo $this->jsonEncode($this->getProduct()->getAttributeText('manufacturer')) ?>
   },
   <?php endif; ?>
   
   "offers": {
     "@type": "Offer",
-    "priceCurrency": "<?php echo $currency_code ?>",
-    "price": "<?php echo $_product->getFinalPrice() ?>",
+    "priceCurrency": "<?php echo $this->getCurrencyCode() ?>",
+    "price": "<?php echo $this->getFinalPriceInclTax() ?>",
     
     <?php if ($_product->isSaleable()): ?>
     "availability": "http://schema.org/InStock"
