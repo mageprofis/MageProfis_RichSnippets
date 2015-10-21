@@ -16,6 +16,7 @@
                 <class>MageProfis_RichSnippets_Block</class>
             </richsnippets>
         </blocks>
+    </global>    
     <frontend>
         <layout>
             <updates>

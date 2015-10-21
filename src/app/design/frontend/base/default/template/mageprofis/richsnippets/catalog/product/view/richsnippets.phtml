@@ -9,7 +9,7 @@
   "image": "<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'image') ?>",
   <?php endif; ?>
   
-  "description": <?php echo $this->jsonEncode($this->getProduct()->getShortDescription()) ?>,
+  "description": <?php echo $this->getShortDescription() ?>,
   "sku": "<?php echo $this->getProduct()->getSku() ?>",
   
   <?php if($this->getProduct()->getManufacturer()): ?>
@@ -24,7 +24,7 @@
     "priceCurrency": "<?php echo $this->getCurrencyCode() ?>",
     "price": "<?php echo $this->getFinalPriceInclTax() ?>",
     
-    <?php if ($_product->isSaleable()): ?>
+    <?php if ($this->getProduct()->isSaleable()): ?>
     "availability": "http://schema.org/InStock"
     <?php else: ?>
     "availability": "http://schema.org/SoldOut"
