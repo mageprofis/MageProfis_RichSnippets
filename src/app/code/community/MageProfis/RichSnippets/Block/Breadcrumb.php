@@ -24,7 +24,7 @@ extends Mage_Core_Block_Template
         if (is_null($this->_breadcrumb))
         {
             $breadcrumb = Mage::helper('catalog')->getBreadcrumbPath();
-            //array_pop($breadcrumb); // remove last item
+            array_pop($breadcrumb); // remove last item
             $this->_breadcrumb = $breadcrumb;
         }
         return $this->_breadcrumb;
