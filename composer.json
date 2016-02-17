@@ -1,0 +1,31 @@
+{
+  "name": "mageprofis/richsnippets",
+  "license": "GPL-3.0",
+  "type": "magento-module",
+  "description": "Magento Richsnippets for Google",
+  "homepage": "https://github.com/mageprofis/MageProfis_RichSnippets",
+  "require": {
+    "php": ">=5.3"
+  },
+  "suggest": {
+    "magento-hackathon/magento-composer-installer": "*"
+  },
+  "authors": [
+    {
+      "name": "Mathis Klooß",
+      "email": "mathis@mage-profis.de",
+      "role": "Author/Maintainer"
+    },
+    {
+      "name": "Leon Weickert",
+      "email": "leon@mage-profis.de",
+      "role": "Author/Maintainer"
+    },
+    {
+      "name": "Remi Ebeling",
+      "email": "remi@mage-profis.de",
+      "role": "Author/Maintainer"
+    }
+  ]
+}
+ 
