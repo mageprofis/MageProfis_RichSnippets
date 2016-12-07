@@ -19,6 +19,14 @@
   },
   <?php endif; ?>
   
+  <?php if($this->getRatingValue()): ?>
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "<?php echo $this->getRatingValue() ?>",
+    "reviewCount": "<?php echo $this->getRatingCount() ?>"
+  },
+  <?php endif; ?>
+  
   "offers": {
     "@type": "Offer",
     "priceCurrency": "<?php echo $this->getCurrencyCode() ?>",
