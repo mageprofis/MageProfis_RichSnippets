@@ -1,0 +1,48 @@
+<script type="application/ld+json">
+    {
+    	"@context": "http://schema.org",
+    	"@type": "LocalBusiness",
+        <?php if($this->getStoreName()): ?>
+            "name": "<?php echo $this->getStoreName() ?>",
+        <?php endif; ?>
+        <?php if($this->getAddress('city') || $this->getAddress('region') || $this->getAddress('zip') || $this->getAddress('street')): ?>
+    	"address": {
+            "@type": "PostalAddress",
+            <?php if ($this->getAddress('city')): ?>
+                "addressLocality": "<?php echo $this->getAddress('city') ?>, Germany",
+            <?php endif; ?>
+            <?php if ($this->getAddress('region')): ?>
+                "addressRegion": "<?php echo $this->getAddress('region') ?>",
+            <?php endif; ?>
+            <?php if ($this->getAddress('zip')): ?>
+                "postalCode": "<?php echo $this->getAddress('zip') ?>",
+            <?php endif; ?>
+            <?php if ($this->getAddress('street')): ?>
+                "streetAddress": "<?php echo $this->getAddress('street') ?>"
+            <?php endif; ?>
+    	},
+        <?php endif; ?>
+        <?php if($this->getEmail()): ?>
+            "email": "<?php echo $this->getEmail() ?>",
+        <?php endif; ?>
+    	<?php if($this->getLogoUrl()): ?>
+            "image": "<?php echo $this->getLogoUrl() ?>",
+        <?php endif; ?>
+    	"url": "<?php echo Mage::getBaseUrl() ?>",
+        <?php if($this->getTelephone()): ?>
+            "telephone": "<?php echo $this->getTelephone() ?>",
+        <?php endif; ?>
+    	"contactPoint": [{
+    		"@type": "ContactPoint",
+                <?php if($this->getTelephone()): ?>
+                    "telephone": "<?php echo $this->getTelephone() ?>",
+                <?php endif; ?>
+    		"contactType": "customer service"
+    	}]
+    }
+</script>
+<!--
+"description": "Unser Unternehmen ist spezialisiert auf Türen und Tore aller Art sowie die dazugehörige Antriebstechnik. Unser Garagentor- und Antriebslager sowie das zugehörige Ersatzteil- und Zubehörprogramm für Tor- und Antriebstechnik ist eines der am besten sortierten in Deutschland.",
+"priceRange": "$$",
+"openingHours": ["Mo-Sa 09:00-12:00", "Mo,Tu,Th,Fri 14:00-18:00"],
+-->

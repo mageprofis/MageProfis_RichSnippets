@@ -6,6 +6,11 @@
         </reference>
     </_breadcrumb>
 
+    <cms_index_index>
+        <reference name="content">
+            <block type="richsnippets/localbusiness" name="localbusiness.richsnippets" template="mageprofis/richsnippets/localbusiness.phtml" />
+        </reference>
+    </cms_index_index>
     <catalog_product_view>
         <update handle="_breadcrumb" />
         <reference name="content">
