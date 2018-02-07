@@ -38,4 +38,26 @@ class MageProfis_RichSnippets_Block_Localbusiness extends Mage_Core_Block_Templa
         return $this->getSkinUrl($logoSrc);
     }
 
+    public function getDescription()
+    {
+        return Mage::getStoreConfig('richsnippets/general/description');
+    }
+    
+    public function getPricerange()
+    {
+        return Mage::getStoreConfig('richsnippets/general/pricerange');
+    }
+    
+    public function getOpeninghoursn()
+    {
+        $hours = Mage::getStoreConfig('richsnippets/general/openinghours');
+        
+        if(!trim($hours))
+            return false;
+        
+        $hours = explode("\n", $hours);
+        $hours = array_filter($hours);
+        
+        return Mage::helper('core')->jsonEncode($hours);
+    }
 }

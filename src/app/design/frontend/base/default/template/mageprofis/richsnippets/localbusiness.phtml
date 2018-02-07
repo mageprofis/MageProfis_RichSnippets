@@ -1,7 +1,21 @@
+<?php
+/*
+ * This should be build as php array and converted to json... @('_')@
+ */
+?>
 <script type="application/ld+json">
     {
     	"@context": "http://schema.org",
     	"@type": "LocalBusiness",
+        <?php if ($this->getDescription()): ?>
+            "description": "<?php echo $this->getDescription() ?>",
+        <?php endif; ?>
+        <?php if ($this->getPricerange()): ?>
+            "priceRange": "<?php echo $this->getPricerange() ?>",
+        <?php endif; ?>
+        <?php if ($this->getOpeninghoursn()): ?>
+            "openingHours": <?php echo $this->getOpeninghoursn() ?>,
+        <?php endif; ?>
         <?php if($this->getStoreName()): ?>
             "name": "<?php echo $this->getStoreName() ?>",
         <?php endif; ?>
@@ -41,8 +55,3 @@
     	}]
     }
 </script>
-<!--
-"description": "Unser Unternehmen ist spezialisiert auf Türen und Tore aller Art sowie die dazugehörige Antriebstechnik. Unser Garagentor- und Antriebslager sowie das zugehörige Ersatzteil- und Zubehörprogramm für Tor- und Antriebstechnik ist eines der am besten sortierten in Deutschland.",
-"priceRange": "$$",
-"openingHours": ["Mo-Sa 09:00-12:00", "Mo,Tu,Th,Fri 14:00-18:00"],
--->

@@ -16,7 +16,28 @@
                 <class>MageProfis_RichSnippets_Block</class>
             </richsnippets>
         </blocks>
-    </global>    
+    </global>
+    <adminhtml>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <richsnippets>
+                                            <title>Rich Snippets</title>
+                                        </richsnippets>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
     <frontend>
         <layout>
             <updates>
