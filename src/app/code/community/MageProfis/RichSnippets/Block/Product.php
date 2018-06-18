@@ -7,6 +7,7 @@ extends Mage_Catalog_Block_Product_Abstract
     public $_rating_count = -1;
 
     protected $_breadcrumb = null;
+    protected $_productModel = null;
 
     /**
      * encode json with extra options
@@ -35,7 +36,7 @@ extends Mage_Catalog_Block_Product_Abstract
      */
     public function getShortDescription()
     {
-        $desc = strip_tags($this->getProduct()->getShortDescription());
+        $desc = strip_tags(str_replace(array("/n","/r"),'',$this->getProduct()->getShortDescription()));
         return $this->jsonEncode($desc);
     }
 
@@ -51,6 +52,25 @@ extends Mage_Catalog_Block_Product_Abstract
         return number_format($price, 2, '.', '');
     }
     
+    public function getProduct(){
+		if (is_null($this->_productModel))
+		{
+			if( parent::getProduct()->getTypeId() != 'configurable' ){
+				$this->_productModel = parent::getProduct();
+				return $this->_productModel;
+			}
+			
+			$childId = Mage::getSingleton('core/session')->getChildProductId();
+			Mage::getSingleton('core/session')->setChildProductId(null);
+			
+			if($childId){
+				$this->_productModel = Mage::getModel('catalog/product')->load($childId);
+				return $this->_productModel;
+			}
+			$this->_productModel = parent::getProduct();
+		}
+		return $this->_productModel;
+	}
     /**
      * get Rating Value
      */
