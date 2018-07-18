@@ -51,26 +51,31 @@ extends Mage_Catalog_Block_Product_Abstract
             ->getPrice($this->getProduct(), $this->getProduct()->getFinalPrice(), true);
         return number_format($price, 2, '.', '');
     }
-    
+
+    /**
+     * 
+     * @return Mage_Catalog_Model_Product
+     */
     public function getProduct(){
-		if (is_null($this->_productModel))
-		{
-			if( parent::getProduct()->getTypeId() != 'configurable' ){
-				$this->_productModel = parent::getProduct();
-				return $this->_productModel;
-			}
-			
-			$childId = Mage::getSingleton('core/session')->getChildProductId();
-			Mage::getSingleton('core/session')->setChildProductId(null);
-			
-			if($childId){
-				$this->_productModel = Mage::getModel('catalog/product')->load($childId);
-				return $this->_productModel;
-			}
-			$this->_productModel = parent::getProduct();
-		}
-		return $this->_productModel;
-	}
+        if (is_null($this->_productModel))
+        {
+            if( parent::getProduct()->getTypeId() != 'configurable' ){
+                $this->_productModel = parent::getProduct();
+                return $this->_productModel;
+            }
+            
+            $childId = Mage::getSingleton('core/session')->getChildProductId();
+            Mage::getSingleton('core/session')->setChildProductId(null);
+            
+            if($childId){
+                $this->_productModel = Mage::getModel('catalog/product')->load($childId);
+                return $this->_productModel;
+            }
+            $this->_productModel = parent::getProduct();
+        }
+        return $this->_productModel;
+    }
+
     /**
      * get Rating Value
      */
@@ -79,7 +84,7 @@ extends Mage_Catalog_Block_Product_Abstract
         $this->getRatingData();
         return $this->_rating_value;
     }
-    
+
     /**
      * get Rating Count
      */
@@ -88,34 +93,44 @@ extends Mage_Catalog_Block_Product_Abstract
         $this->getRatingData();
         return $this->_rating_count;
     }
-    
+
+    /**
+     * 
+     * @return boolean
+     */
     public function getRatingData()
     {
-        if ($this->_rating_value!=-1 || $this->_rating_count!=-1) return true;
-        
-        $this->_rating_value = false;
-        $this->_rating_count = false;
-        
-        try {
-            $summaryData = Mage::getModel('review/review_summary')
-                ->setStoreId(Mage::app()->getStore()->getId())
-                ->load($this->getProduct()->getId());
+        if (Mage::helper('core')->isModuleEnabled('Mage_Review')
+                && Mage::getConfig()->getModuleConfig('Mage_Review')->is('active', 'true'))
+        {
+            if ($this->_rating_value!=-1 || $this->_rating_count!=-1) return true;
 
-            if(!$summaryData->getRatingSummary()) return false;
+            $this->_rating_value = false;
+            $this->_rating_count = false;
 
-            $rating_value = ($summaryData->getRatingSummary() / 100) * 5;
-            $rating_value = number_format($rating_value, 1, '.', '');
+            try {
+                $summaryData = Mage::getModel('review/review_summary')
+                    ->setStoreId(Mage::app()->getStore()->getId())
+                    ->load($this->getProduct()->getId());
 
-            $this->_rating_value = $rating_value;
-            $this->_rating_count = $summaryData->getReviewsCount();
-            
-            return true;
-        } catch (Exception $e) {
-            //
-            //  \,,/(^_^)\,,/
-            //
+                if(!$summaryData->getRatingSummary()) return false;
+
+                $rating_value = ($summaryData->getRatingSummary() / 100) * 5;
+                $rating_value = number_format($rating_value, 1, '.', '');
+
+                $this->_rating_value = $rating_value;
+                $this->_rating_count = $summaryData->getReviewsCount();
+
+                return true;
+            } catch (Exception $e) {
+                //
+                //  \,,/(^_^)\,,/
+                //
+            }
+        } else {
+            $this->_rating_value = false;
+            $this->_rating_count = false;
         }
-        
         return false;
     }
 }
