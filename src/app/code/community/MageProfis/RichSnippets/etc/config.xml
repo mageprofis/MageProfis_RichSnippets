@@ -16,6 +16,11 @@
                 <class>MageProfis_RichSnippets_Block</class>
             </richsnippets>
         </blocks>
+        <models>
+            <richsnippets>
+                <class>MageProfis_RichSnippets_Model</class>
+            </richsnippets>
+        </models>
     </global>
     <adminhtml>
         <acl>
@@ -47,4 +52,24 @@
             </updates>
         </layout>
     </frontend>
+    <crontab>
+        <jobs>
+            <richsnippets_trustedshops>
+                <schedule>
+                    <cron_expr>45 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>richsnippets/cron_trustedshops::run</model>
+                </run>
+            </richsnippets_trustedshops>
+        </jobs>
+    </crontab>
+    <default>
+        <richsnippets>
+            <rating>
+                <active>1</active>
+                <mode>magento</mode>
+            </rating>
+        </richsnippets>
+    </default>
 </config>

@@ -1,11 +1,9 @@
 <?php
 
-class MageProfis_RichSnippets_Block_Product
-extends Mage_Catalog_Block_Product_Abstract
+class MageProfis_RichSnippets_Block_Product extends Mage_Catalog_Block_Product_Abstract
 {
     public $_rating_value = -1;
     public $_rating_count = -1;
-
     protected $_breadcrumb = null;
     protected $_productModel = null;
 
@@ -36,7 +34,7 @@ extends Mage_Catalog_Block_Product_Abstract
      */
     public function getShortDescription()
     {
-        $desc = strip_tags(str_replace(array("/n","/r"),'',$this->getProduct()->getShortDescription()));
+        $desc = strip_tags(str_replace(array("/n", "/r"), '', $this->getProduct()->getShortDescription()));
         return $this->jsonEncode($desc);
     }
 
@@ -48,7 +46,7 @@ extends Mage_Catalog_Block_Product_Abstract
     public function getFinalPriceInclTax()
     {
         $price = Mage::helper('tax')
-            ->getPrice($this->getProduct(), $this->getProduct()->getFinalPrice(), true);
+                ->getPrice($this->getProduct(), $this->getProduct()->getFinalPrice(), true);
         return number_format($price, 2, '.', '');
     }
 
@@ -56,18 +54,21 @@ extends Mage_Catalog_Block_Product_Abstract
      * 
      * @return Mage_Catalog_Model_Product
      */
-    public function getProduct(){
+    public function getProduct()
+    {
         if (is_null($this->_productModel))
         {
-            if( parent::getProduct()->getTypeId() != 'configurable' ){
+            if (parent::getProduct()->getTypeId() != 'configurable')
+            {
                 $this->_productModel = parent::getProduct();
                 return $this->_productModel;
             }
-            
+
             $childId = Mage::getSingleton('core/session')->getChildProductId();
             Mage::getSingleton('core/session')->setChildProductId(null);
-            
-            if($childId){
+
+            if ($childId)
+            {
                 $this->_productModel = Mage::getModel('catalog/product')->load($childId);
                 return $this->_productModel;
             }
@@ -100,37 +101,70 @@ extends Mage_Catalog_Block_Product_Abstract
      */
     public function getRatingData()
     {
-        if (Mage::helper('core')->isModuleEnabled('Mage_Review')
-                && Mage::getConfig()->getModuleConfig('Mage_Review')->is('active', 'true'))
+        if (Mage::helper('core')->isModuleEnabled('Mage_Review') && Mage::getConfig()->getModuleConfig('Mage_Review')->is('active', 'true') && Mage::getStoreConfig('richsnippets/rating/active'))
         {
-            if ($this->_rating_value!=-1 || $this->_rating_count!=-1) return true;
+            if ($this->_rating_value != -1 || $this->_rating_count != -1)
+                return true;
 
             $this->_rating_value = false;
             $this->_rating_count = false;
 
-            try {
-                $summaryData = Mage::getModel('review/review_summary')
-                    ->setStoreId(Mage::app()->getStore()->getId())
-                    ->load($this->getProduct()->getId());
-
-                if(!$summaryData->getRatingSummary()) return false;
-
-                $rating_value = ($summaryData->getRatingSummary() / 100) * 5;
-                $rating_value = number_format($rating_value, 1, '.', '');
-
-                $this->_rating_value = $rating_value;
-                $this->_rating_count = $summaryData->getReviewsCount();
-
-                return true;
-            } catch (Exception $e) {
-                //
-                //  \,,/(^_^)\,,/
-                //
+            if (Mage::getStoreConfig('richsnippets/rating/mode') == 'trustedshops')
+            {
+                return $this->_getRatingDataTrustedShops();
+            } else
+            {
+                return $this->_getRatingDataMagento();
             }
-        } else {
+        } else
+        {
             $this->_rating_value = false;
             $this->_rating_count = false;
         }
         return false;
     }
+
+    public function _getRatingDataTrustedShops()
+    {
+        try {
+            $raw = Mage::getStoreConfig('richsnippets/rating/trustedshops_result');
+            $data = Mage::helper('core')->jsonDecode($raw);
+            
+            $this->_rating_value = $data['response']['data']['shop']['qualityIndicators']['reviewIndicator']['overallMark'];
+            $this->_rating_count = $data['response']['data']['shop']['qualityIndicators']['reviewIndicator']['totalReviewCount'];
+        } catch (Exception $e) {
+            //
+            //  \,,/(^_^)\,,/
+            //
+        }
+
+        return false;
+    }
+
+    public function _getRatingDataMagento()
+    {
+        try {
+            $summaryData = Mage::getModel('review/review_summary')
+                    ->setStoreId(Mage::app()->getStore()->getId())
+                    ->load($this->getProduct()->getId());
+
+            if (!$summaryData->getRatingSummary())
+                return false;
+
+            $rating_value = ($summaryData->getRatingSummary() / 100) * 5;
+            $rating_value = number_format($rating_value, 1, '.', '');
+
+            $this->_rating_value = $rating_value;
+            $this->_rating_count = $summaryData->getReviewsCount();
+
+            return true;
+        } catch (Exception $e) {
+            //
+            //  \,,/(^_^)\,,/
+            //
+        }
+        
+        return false;
+    }
+
 }
