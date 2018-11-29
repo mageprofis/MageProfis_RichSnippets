@@ -4,12 +4,22 @@ class MageProfis_RichSnippets_Block_Localbusiness extends Mage_Core_Block_Templa
 {
     public function getStoreName()
     {
-        return Mage::getStoreConfig('general/store_information/name');
+        $out = Mage::getStoreConfig('general/store_information/name');
+        if(!$out)
+        {
+            $out = Mage::getStoreConfig('general/imprint/company_first');
+        }
+        return $out;
     }
 
     public function getAddress($code)
     {
-        return Mage::getStoreConfig('general/impressum/' . $code);
+        $out = Mage::getStoreConfig('general/impressum/' . $code);
+        if(!$out)
+        {
+            $out = Mage::getStoreConfig('general/imprint/' . $code);
+        }
+        return $out;
     }
 
     public function getTelephone()
